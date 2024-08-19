@@ -2,7 +2,7 @@
 $host       = "localhost";
 $user       = "root";
 $pass       = "";
-$db         = "akademikk";
+$db         = "akademikkk";
 
 $koneksi    = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) { //cek koneksi
@@ -11,6 +11,7 @@ if (!$koneksi) { //cek koneksi
 $nim        = "";
 $nama       = "";
 $alamat     = "";
+$notelpon     = "";
 $fakultas   = "";
 $sukses     = "";
 $error      = "";
@@ -38,6 +39,7 @@ if ($op == 'edit') {
     $nim        = $r1['nim'];
     $nama       = $r1['nama'];
     $alamat     = $r1['alamat'];
+    $notelpon     = $r1['notelpon'];
     $fakultas   = $r1['fakultas'];
 
     if ($nim == '') {
@@ -48,11 +50,12 @@ if (isset($_POST['simpan'])) { //untuk create
     $nim        = $_POST['nim'];
     $nama       = $_POST['nama'];
     $alamat     = $_POST['alamat'];
+    $notelpon     = $_POST['notelpon'];
     $fakultas   = $_POST['fakultas'];
 
     if ($nim && $nama && $alamat && $fakultas) {
         if ($op == 'edit') { //untuk update
-            $sql1       = "update mahasiswa set nim = '$nim',nama='$nama',alamat = '$alamat',fakultas='$fakultas' where id = '$id'";
+            $sql1       = "update mahasiswaa set nim = '$nim',nama='$nama',alamat = '$alamat',notelpon='$notelpon',fakultas='$fakultas' where id = '$id'";
             $q1         = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses = "Data berhasil diupdate";
@@ -60,7 +63,7 @@ if (isset($_POST['simpan'])) { //untuk create
                 $error  = "Data gagal diupdate";
             }
         } else { //untuk insert
-            $sql1   = "insert into mahasiswa(nim,nama,alamat,fakultas) values ('$nim','$nama','$alamat','$fakultas')";
+            $sql1   = "insert into mahasiswaa(nim,nama,alamat,notelpon,fakultas) values ('$nim','$nama','$alamat','$notelpon','$fakultas')";
             $q1     = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses     = "Berhasil memasukkan data baru";
@@ -141,6 +144,12 @@ if (isset($_POST['simpan'])) { //untuk create
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="notelpon" class="col-sm-2 col-form-label">no telpon</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="notelpon" name="notelpon" value="<?php echo $notelpon ?>">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="fakultas" class="col-sm-2 col-form-label">Fakultas</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="fakultas" id="fakultas">
@@ -170,13 +179,14 @@ if (isset($_POST['simpan'])) { //untuk create
                             <th scope="col">Nim</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Alamat</th>
+                            <th scope="col">notelpon</th>
                             <th scope="col">Fakultas</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql2   = "select * from mahasiswa order by id desc";
+                        $sql2   = "select * from mahasiswaa order by id desc";
                         $q2     = mysqli_query($koneksi, $sql2);
                         $urut   = 1;
                         while ($r2 = mysqli_fetch_array($q2)) {
@@ -184,6 +194,7 @@ if (isset($_POST['simpan'])) { //untuk create
                             $nim        = $r2['nim'];
                             $nama       = $r2['nama'];
                             $alamat     = $r2['alamat'];
+                            $notelpon   = $r2['notelpon'];
                             $fakultas   = $r2['fakultas'];
 
                         ?>
@@ -192,6 +203,7 @@ if (isset($_POST['simpan'])) { //untuk create
                                 <td scope="row"><?php echo $nim ?></td>
                                 <td scope="row"><?php echo $nama ?></td>
                                 <td scope="row"><?php echo $alamat ?></td>
+                                <td scope="row"><?php echo $notelpon ?></td>
                                 <td scope="row"><?php echo $fakultas ?></td>
                                 <td scope="row">
                                     <a href="index.php?op=edit&id=<?php echo $id ?>"><button type="button" class="btn btn-warning">Edit</button></a>
